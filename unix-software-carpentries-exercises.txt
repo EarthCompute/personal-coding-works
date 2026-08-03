@@ -1,0 +1,843 @@
+### 02-filedir Exercises (Original source for material: https://swcarpentry.github.io/shell-novice/02-filedir.html)
+
+### Q. You can also use two options at the same time. What does the command ls do when used with the -l option? What about if you use both the -l and the -h option?
+### Some of its output is about properties that we do not cover in this lesson (such as file permissions and ownership), but the rest should be useful nevertheless.
+
+A. The answer to this question can be found by using the 'help' option. After this, -l provides information of files and directories in a long listing format,
+while using '-lh' outputs the file sizes in human-readable formats i.e., the file sizes in MB, GB, etc. 
+
+### Q. By default, ls lists the contents of a directory in alphabetical order by name. The command ls -t lists items by time of last change instead of alphabetically. 
+### The command ls -r lists the contents of a directory in reverse order. Which file is displayed last when you combine the -t and -r options? Hint: You may need 
+### to use the -l option to see the last changed dates.
+
+A. The files displayed last are the most recent files i.e., the most recent times of change.
+
+### Q. Starting from /Users/nelle/data, which of the following commands could Nelle use to navigate to her home directory, which is /Users/nelle?
+
+    cd .
+    cd /
+    cd /home/nelle
+    cd ../..
+    cd ~
+    cd home
+    cd ~/data/..
+    cd
+    cd ..
+###
+A. cd ~, cd .., cd 
+
+### Q. Using the filesystem diagram below, if pwd displays /Users/thing, what will ls -F ../backup display?
+
+    ../backup: No such file or directory
+    2012-12-01 2013-01-08 2013-01-27
+    2012-12-01/ 2013-01-08/ 2013-01-27/
+    original/ pnas_final/ pnas_sub/
+
+###
+A. original/ pnas_final/ pnas_sub/
+
+### Q. Using the filesystem diagram below, if pwd displays /Users/backup, and -r tells ls to display things in reverse order, what command(s) will result in the following output:
+pnas_sub/ pnas_final/ original/
+    ls pwd
+    ls -r -F
+    ls -r -F /Users/backup
+
+###
+A. ls -r -F /Users/backup
+
+
+### 03-create (Original source for material: https://swcarpentry.github.io/shell-novice/03-create.html)
+
+### Q. We have seen how to create text files using the nano editor. Now, try the following command:
+$ touch my_file.txt
+
+    What did the touch command do? When you look at your current directory using the GUI file explorer, does the file show up?
+
+    Use ls -l to inspect the files. How large is my_file.txt?
+
+    When might you want to create a file this way?
+
+###
+A.  1. Creates a new (and empty) text file called my_file.txt. Yes, the file shows up.
+	2. 0 bytes 
+	3. Creating empty files like this could be relevant to start the process of writing a set of model outputs to file, for example.
+
+### Q. After running the following commands, Jamie realizes that she put the files sucrose.dat and maltose.dat into the wrong folder. The files should have been placed in the raw folder.
+
+$ ls -F
+ analyzed/ raw/
+$ ls -F analyzed
+fructose.dat glucose.dat maltose.dat sucrose.dat
+$ cd analyzed
+
+Fill in the blanks to move these files to the raw/ folder (i.e. the one she forgot to put them in)
+
+$ mv sucrose.dat maltose.dat ____/____
+
+### 
+A. ../raw
+
+### Q. 
+
+Suppose that you created a plain-text file in your current directory to contain a list of the statistical tests you will need to do to analyze your data, and named it statstics.txt
+
+After creating and saving this file you realize you misspelled the filename! You want to correct the mistake, which of the following commands could you use to do so?
+
+    cp statstics.txt statistics.txt
+    mv statstics.txt statistics.txt
+    mv statstics.txt .
+    cp statstics.txt .
+
+###
+A. mv statstics.txt statistics.txt
+
+### Q. What is the output of the closing ls command in the sequence shown below?
+
+$ pwd
+
+/Users/jamie/data
+
+$ ls
+
+proteins.dat
+
+$ mkdir recombined
+$ mv proteins.dat recombined/
+$ cp recombined/proteins.dat ../proteins-saved.dat
+$ ls
+
+    proteins-saved.dat recombined
+    recombined
+    proteins.dat recombined
+    proteins-saved.dat
+
+### 
+A. proteins-saved.dat recombined (Incorrect-the copy was relative to the current working directory, not recombined)
+
+### Q. What happens when we execute rm -i thesis_backup/quotations.txt? Why would we want this protection when using rm?
+
+### 
+A. Prompts the user to ensure deletion. This is provides another step to make sure the file in question isn't deleted accidentally.
+
+### Q.For this exercise, you can test the commands in the shell-lesson-data/exercise-data directory.
+
+In the example below, what does cp do when given several filenames and a directory name?
+
+$ mkdir backup
+$ cp creatures/minotaur.dat creatures/unicorn.dat backup/
+
+In the example below, what does cp do when given three or more file names?
+
+$ cd creatures
+$ ls -F
+
+basilisk.dat  minotaur.dat  unicorn.dat
+
+$ cp minotaur.dat unicorn.dat basilisk.dat
+###
+A. Copies the files in question and moves them all to backup/. 
+To answer the second question-based on the help information, it would make a backup of these three files in the same current working directory-
+I think that, because the argument was not supplied, it is assumed to apply to the current working directory. (Incorrect-Gives an error).
+
+### Q. 
+
+When run in the alkanes directory, which ls command(s) will produce this output?
+
+ethane.pdb methane.pdb
+
+    ls *t*ane.pdb
+    ls *t?ne.*
+    ls *t??ne.pdb
+    ls ethane.*
+
+### 
+A. ls *t*ane.pdb (assuming it is the only files in that folder), ls *t??ne.pdb
+
+### Q. Sam has a directory containing calibration data, datasets, and descriptions of the datasets:
+BASH
+
+.
+├── 2015-10-23-calibration.txt
+├── 2015-10-23-dataset1.txt
+├── 2015-10-23-dataset2.txt
+├── 2015-10-23-dataset_overview.txt
+├── 2015-10-26-calibration.txt
+├── 2015-10-26-dataset1.txt
+├── 2015-10-26-dataset2.txt
+├── 2015-10-26-dataset_overview.txt
+├── 2015-11-23-calibration.txt
+├── 2015-11-23-dataset1.txt
+├── 2015-11-23-dataset2.txt
+├── 2015-11-23-dataset_overview.txt
+├── backup
+│   ├── calibration
+│   └── datasets
+└── send_to_bob
+    ├── all_datasets_created_on_a_23rd
+    └── all_november_files
+
+Before heading off to another field trip, she wants to back up her data and send some datasets to her colleague Bob. Sam uses the following commands to get the job done:
+BASH
+
+$ cp *dataset* backup/datasets
+$ cp ____calibration____ backup/calibration
+$ cp 2015-____-____ send_to_bob/all_november_files/
+$ cp ____ send_to_bob/all_datasets_created_on_a_23rd/
+
+Help Sam by filling in the blanks.
+
+The resulting directory structure should look like this
+BASH
+
+.
+├── 2015-10-23-calibration.txt
+├── 2015-10-23-dataset1.txt
+├── 2015-10-23-dataset2.txt
+├── 2015-10-23-dataset_overview.txt
+├── 2015-10-26-calibration.txt
+├── 2015-10-26-dataset1.txt
+├── 2015-10-26-dataset2.txt
+├── 2015-10-26-dataset_overview.txt
+├── 2015-11-23-calibration.txt
+├── 2015-11-23-dataset1.txt
+├── 2015-11-23-dataset2.txt
+├── 2015-11-23-dataset_overview.txt
+├── backup
+│   ├── calibration
+│   │   ├── 2015-10-23-calibration.txt
+│   │   ├── 2015-10-26-calibration.txt
+│   │   └── 2015-11-23-calibration.txt
+│   └── datasets
+│       ├── 2015-10-23-dataset1.txt
+│       ├── 2015-10-23-dataset2.txt
+│       ├── 2015-10-23-dataset_overview.txt
+│       ├── 2015-10-26-dataset1.txt
+│       ├── 2015-10-26-dataset2.txt
+│       ├── 2015-10-26-dataset_overview.txt
+│       ├── 2015-11-23-dataset1.txt
+│       ├── 2015-11-23-dataset2.txt
+│       └── 2015-11-23-dataset_overview.txt
+└── send_to_bob
+    ├── all_datasets_created_on_a_23rd
+    │   ├── 2015-10-23-dataset1.txt
+    │   ├── 2015-10-23-dataset2.txt
+    │   ├── 2015-10-23-dataset_overview.txt
+    │   ├── 2015-11-23-dataset1.txt
+    │   ├── 2015-11-23-dataset2.txt
+    │   └── 2015-11-23-dataset_overview.txt
+    └── all_november_files
+        ├── 2015-11-23-calibration.txt
+        ├── 2015-11-23-dataset1.txt
+        ├── 2015-11-23-dataset2.txt
+        └── 2015-11-23-dataset_overview.txt
+
+###
+A. 
+$ cp *dataset* backup/datasets
+$ cp *calibration.* backup/calibration
+$ cp 2015-11-* send_to_bob/all_november_files/
+$ cp *-23.* send_to_bob/all_datasets_created_on_a_23rd/ (Incorrect-looking for dataset specific files to filter out)
+
+### Q. Jamie is working on a project, and she sees that her files aren’t very well organized:
+BASH
+
+$ ls -F
+
+OUTPUT
+
+analyzed/  fructose.dat    raw/   sucrose.dat
+
+The fructose.dat and sucrose.dat files contain output from her data analysis. What command(s) covered in this lesson does she need to run so that the commands below will produce the output shown?
+BASH
+
+$ ls -F
+
+OUTPUT
+
+analyzed/   raw/
+
+BASH
+
+$ ls analyzed
+
+OUTPUT
+
+fructose.dat    sucrose.dat
+
+### 
+A. mv fructose.dat sucrose.dat analyzed/
+
+### Q. You’re starting a new experiment and would like to duplicate the directory structure from your previous experiment so you can add new data.
+
+Assume that the previous experiment is in a folder called 2016-05-18, which contains a data folder that in turn contains folders named raw and processed that contain data files. The goal is to copy the folder structure of the 2016-05-18 folder into a folder called 2016-05-20 so that your final directory structure looks like this:
+OUTPUT
+
+2016-05-20/
+└── data
+   ├── processed
+   └── raw
+
+Which of the following set of commands would achieve this objective? What would the other commands do?
+BASH
+
+$ mkdir 2016-05-20
+$ mkdir 2016-05-20/data
+$ mkdir 2016-05-20/data/processed
+$ mkdir 2016-05-20/data/raw
+
+BASH
+
+$ mkdir 2016-05-20
+$ cd 2016-05-20
+$ mkdir data
+$ cd data
+$ mkdir raw processed
+
+BASH
+
+$ mkdir 2016-05-20/data/raw
+$ mkdir 2016-05-20/data/processed
+
+BASH
+
+$ mkdir -p 2016-05-20/data/raw
+$ mkdir -p 2016-05-20/data/processed
+
+BASH
+
+$ mkdir 2016-05-20
+$ cd 2016-05-20
+$ mkdir data
+$ mkdir raw processed
+
+###
+A. I only chose one answer, as the question seemed to imply only one answer. However, I was considering the second choice too. 
+$ mkdir -p 2016-05-20/data/raw
+$ mkdir -p 2016-05-20/data/processed
+
+### 04-pipefilter (Original source from https://swcarpentry.github.io/shell-novice/04-pipefilter.html)
+
+### Q. The file shell-lesson-data/exercise-data/numbers.txt contains the following lines:
+
+10
+2
+19
+22
+6
+
+If we run sort on this file, the output is:
+OUTPUT
+
+10
+19
+2
+22
+6
+
+If we run sort -n on the same file, we get this instead:
+OUTPUT
+
+2
+6
+10
+19
+22
+
+Explain why -n has this effect.
+
+### 
+A. -n sorts by string numerical order, meaning it sorts as the way we intended. Not having -n sorts by its alphanumeric value,
+so it sorts by 0s first, then ones, twos, etc.
+
+### Q. We have seen the use of >, but there is a similar operator >> which works slightly differently. We’ll learn about the differences between these two operators by printing some strings. We can use the echo command to print strings e.g.
+BASH
+
+$ echo The echo command prints text
+
+OUTPUT
+
+The echo command prints text
+
+Now test the commands below to reveal the difference between the two operators:
+BASH
+
+$ echo hello > testfile01.txt
+
+and:
+BASH
+
+$ echo hello >> testfile02.txt
+
+Hint: Try executing each command twice in a row and then examining the output files.
+
+### 
+A.  >> allows for appending onto a pre-existing file, while > overwrites the file (when run twice in a row as suggested).
+
+### Q. We have already met the head command, which prints lines from the start of a file. tail is similar, but prints lines from the end of a file instead.
+
+Consider the file shell-lesson-data/exercise-data/animal-counts/animals.csv. After these commands, select the answer that corresponds to the file animals-subset.csv:
+BASH
+
+$ head -n 3 animals.csv > animals-subset.csv
+$ tail -n 2 animals.csv >> animals-subset.csv
+
+    The first three lines of animals.csv
+    The last two lines of animals.csv
+    The first three lines and the last two lines of animals.csv
+    The second and third lines of animals.csv
+
+###
+A. The first three lines and the last two lines of animals.csv
+
+# Q. 
+
+In our current directory, we want to find the 3 files which have the least number of lines. Which command listed below would work?
+
+    wc -l * > sort -n > head -n 3
+    wc -l * | sort -n | head -n 1-3
+    wc -l * | head -n 3 | sort -n
+    wc -l * | sort -n | head -n 3
+
+###
+A. wc -l * | sort -n | head -n 3
+
+### Q. A file called animals.csv (in the shell-lesson-data/exercise-data/animal-counts folder) contains the following data:
+
+2012-11-05,deer,5
+2012-11-05,rabbit,22
+2012-11-05,raccoon,7
+2012-11-06,rabbit,19
+2012-11-06,deer,2
+2012-11-06,fox,4
+2012-11-07,rabbit,16
+2012-11-07,bear,1
+
+What text passes through each of the pipes and the final redirect in the pipeline below? Note, the sort -r command sorts in reverse order.
+BASH
+
+$ cat animals.csv | head -n 5 | tail -n 3 | sort -r > final.txt
+
+Hint: build the pipeline up one command at a time to test your understanding
+
+### 
+A. 
+2012-11-06,deer,2
+2012-11-06,rabbit,19
+2012-11-05,raccoon,7
+
+### Q. For the file animals.csv from the previous exercise, consider the following command:
+BASH
+
+$ cut -d , -f 2 animals.csv
+
+The cut command is used to remove or ‘cut out’ certain sections of each line in the file, and cut expects the lines to be separated into columns by a Tab character. A character used in this way is called a delimiter. In the example above we use the -d option to specify the comma as our delimiter character. We have also used the -f option to specify that we want to extract the second field (column). This gives the following output:
+OUTPUT
+
+deer
+rabbit
+raccoon
+rabbit
+deer
+fox
+rabbit
+bear
+
+The uniq command filters out adjacent matching lines in a file. How could you extend this pipeline (using uniq and another command) to find out what animals the file contains (without any duplicates in their names)?
+
+###
+A. cut -d , -f 2 animals.csv | (really had no idea how to answer this)
+
+### Q. The file animals.csv contains 8 lines of data formatted as follows:
+OUTPUT
+
+2012-11-05,deer,5
+2012-11-05,rabbit,22
+2012-11-05,raccoon,7
+2012-11-06,rabbit,19
+...
+
+The uniq command has a -c option which gives a count of the number of times a line occurs in its input. Assuming your current directory is shell-lesson-data/exercise-data/animal-counts, what command would you use to produce a table that shows the total count of each type of animal in the file?
+
+    sort animals.csv | uniq -c
+    sort -t, -k2,2 animals.csv | uniq -c
+    cut -d, -f 2 animals.csv | uniq -c
+    cut -d, -f 2 animals.csv | sort | uniq -c
+    cut -d, -f 2 animals.csv | sort | uniq -c | wc -l
+
+###
+A. cut -d, -f 2 animals.csv | sort | uniq -c
+
+### Q. 
+
+Suppose you want to delete your processed data files, and only keep your raw files and processing script to save storage. The raw files end in .dat and the processed files end in .txt. Which of the following would remove all the processed data files, and only the processed data files?
+
+    rm ?.txt
+    rm *.txt
+    rm * .txt
+    rm *.*
+
+###
+A. rm *.txt
+
+### 05-loop (original source from https://swcarpentry.github.io/shell-novice/05-loop.html)
+
+### Q. How would you write a loop that echoes all 10 numbers from 0 to 9?
+A. 
+$ for num_idx in 0 1 2 3 4 5 6 7 8 9
+> do
+>     echo num_idx
+> done
+
+### Q. This exercise refers to the shell-lesson-data/exercise-data/alkanes directory. ls *.pdb gives the following output:
+OUTPUT
+
+cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+
+What is the output of the following code?
+BASH
+
+$ for datafile in *.pdb
+> do
+>     ls *.pdb
+> done
+
+Now, what is the output of the following code?
+BASH
+
+$ for datafile in *.pdb
+> do
+>     ls $datafile
+> done
+
+Why do these two loops give different outputs?
+
+###
+A. First run will just list contents (assuming we're in the same working directory)-datafile is not utilized.
+The second run will print all files, one line at a time, becasue it is utilizing datafile as a variable.
+
+### Q. What would be the output of running the following loop in the shell-lesson-data/exercise-data/alkanes directory?
+BASH
+
+$ for filename in c*
+> do
+>     ls $filename
+> done
+
+    No files are listed.
+    All files are listed.
+    Only cubane.pdb, octane.pdb and pentane.pdb are listed.
+    Only cubane.pdb is listed.
+
+###
+A. Only cubane.pdb is listed.
+
+### Q. How would the output differ from using this command instead?
+BASH
+
+$ for filename in *c*
+> do
+>     ls $filename
+> done
+
+    The same files would be listed.
+    All the files are listed this time.
+    No files are listed this time.
+    The files cubane.pdb and octane.pdb will be listed.
+    Only the file octane.pdb will be listed.
+
+###
+A. The files cubane.pdb and octane.pdb will be listed.
+
+### Q. In the shell-lesson-data/exercise-data/alkanes directory, what is the effect of this loop?
+BASH
+
+for alkanes in *.pdb
+do
+    echo $alkanes
+    cat $alkanes > alkanes.pdb
+done
+
+    Prints cubane.pdb, ethane.pdb, methane.pdb, octane.pdb, pentane.pdb and propane.pdb, and the text from propane.pdb will be saved to a file called alkanes.pdb.
+    Prints cubane.pdb, ethane.pdb, and methane.pdb, and the text from all three files would be concatenated and saved to a file called alkanes.pdb.
+    Prints cubane.pdb, ethane.pdb, methane.pdb, octane.pdb, and pentane.pdb, and the text from propane.pdb will be saved to a file called alkanes.pdb.
+    None of the above.
+
+###
+A. None of the above. (question was misleading)
+
+### Q. Also in the shell-lesson-data/exercise-data/alkanes directory, what would be the output of the following loop?
+BASH
+
+for datafile in *.pdb
+do
+    cat $datafile >> all.pdb
+done
+
+    All of the text from cubane.pdb, ethane.pdb, methane.pdb, octane.pdb, and pentane.pdb would be concatenated and saved to a file called all.pdb.
+    The text from ethane.pdb will be saved to a file called all.pdb.
+    All of the text from cubane.pdb, ethane.pdb, methane.pdb, octane.pdb, pentane.pdb and propane.pdb would be concatenated and saved to a file called all.pdb.
+    All of the text from cubane.pdb, ethane.pdb, methane.pdb, octane.pdb, pentane.pdb and propane.pdb would be printed to the screen and saved to a file called all.pdb.
+
+###
+A. All of the text from cubane.pdb, ethane.pdb, methane.pdb, octane.pdb, pentane.pdb and propane.pdb would be concatenated and saved to a file called all.pdb.
+
+### Q. A loop is a way to do many things at once — or to make many mistakes at once if it does the wrong thing. One way to check what a loop would do is to echo the commands it would run instead of actually running them.
+
+Suppose we want to preview the commands the following loop will execute without actually running those commands:
+BASH
+
+$ for datafile in *.pdb
+> do
+>     cat $datafile >> all.pdb
+> done
+
+What is the difference between the two loops below, and which one would we want to run?
+BASH
+
+# Version 1
+$ for datafile in *.pdb
+> do
+>     echo cat $datafile >> all.pdb
+> done
+
+BASH
+
+# Version 2
+$ for datafile in *.pdb
+> do
+>     echo "cat $datafile >> all.pdb"
+> done
+
+###
+A. The difference between the two is that the first creates a single file with appended file names of what would be run, while the second would do this all to command line. 
+The second would require a lot of scrolling and wouldn't really be formatted.
+
+### Q. Suppose we want to set up a directory structure to organize some experiments measuring reaction rate constants with different compounds and different temperatures. What would be the result of the following code:
+BASH
+
+$ for species in cubane ethane methane
+> do
+>     for temperature in 25 30 37 40
+>     do
+>         mkdir $species-$temperature
+>     done
+> done
+
+###
+A. It would create directories for each lsited temperature in a given species, and then repeat for all species, acting as a nested loop e.g., cubane-25, cubane-30...methane-40
+
+### 06-script (original from https://swcarpentry.github.io/shell-novice/06-script.html)
+Q: 
+
+Leah has several hundred data files, each of which is formatted like this:
+
+2013-11-05,deer,5
+2013-11-05,rabbit,22
+2013-11-05,raccoon,7
+2013-11-06,rabbit,19
+2013-11-06,deer,2
+2013-11-06,fox,1
+2013-11-07,rabbit,18
+2013-11-07,bear,1
+
+An example of this type of file is given in shell-lesson-data/exercise-data/animal-counts/animals.csv.
+
+We can use the command cut -d , -f 2 animals.csv | sort | uniq to produce the unique species in animals.csv. In order to avoid having to type out this series of commands every time, a scientist may choose to write a shell script instead.
+
+Write a shell script called species.sh that takes any number of filenames as command-line arguments and uses a variation of the above command to print a list of the unique species appearing in each of those files separately.
+
+###
+A. 
+bash species.sh animals.csv
+
+In 'species.sh':
+cut -d , -f 2 "$@" | sort | uniq
+
+### Q. If you run the command:
+BASH
+
+$ history | tail -n 5 > recent.sh
+
+the last command in the file is the history command itself, i.e., the shell has added history to the command log before actually running it. In fact, the shell always adds commands to the log before running them. Why do you think it does this?
+
+###
+A. Because it provides traceability, and even recovery in the event that an accident occurs like an accidental computer shutdown.
+
+### Q. In the alkanes directory, imagine you have a shell script called script.sh containing the following commands:
+BASH
+
+head -n $2 $1
+tail -n $3 $1
+
+While you are in the alkanes directory, you type the following command:
+BASH
+
+$ bash script.sh '*.pdb' 1 1
+
+Which of the following outputs would you expect to see?
+
+    All of the lines between the first and the last lines of each file ending in .pdb in the alkanes directory
+    The first and the last line of each file ending in .pdb in the alkanes directory
+    The first and the last line of each file in the alkanes directory
+    An error because of the quotes around *.pdb
+
+### 
+A. An error because of the quotes around *.pdb
+
+### Q. Write a shell script called longest.sh that takes the name of a directory and a filename extension as its arguments, and prints out the name of the file with the most lines in that directory with that extension. For example:
+BASH
+
+$ bash longest.sh shell-lesson-data/exercise-data/alkanes pdb
+
+would print the name of the .pdb file in shell-lesson-data/exercise-data/alkanes that has the most lines.
+
+Feel free to test your script on another directory e.g.
+BASH
+
+$ bash longest.sh shell-lesson-data/exercise-data/writing txt
+
+### 
+A. 
+echo wc -l $1/*$2  | sort -n | sort -r | head -n 1
+
+### Q. For this question, consider the shell-lesson-data/exercise-data/alkanes directory once again. This contains a number of .pdb files in addition to any other files you may have created. Explain what each of the following three scripts would do when run as bash script1.sh *.pdb, bash script2.sh *.pdb, and bash script3.sh *.pdb respectively.
+BASH
+
+# Script 1
+echo *.*
+
+BASH
+
+# Script 2
+for filename in $1 $2 $3
+do
+    cat $filename
+done
+
+BASH
+
+# Script 3
+echo $@.pdb
+
+###
+A. 
+Script 1 would print out all files, in addition to those in .pdb
+
+Script 2 would just print out the filenames associated with $1 or *.pdb - $2 and $3 are not supplied.
+
+Script 3 would also give an error because its @pdb.pdb 
+
+### Q. Suppose you have saved the following script in a file called do-errors.sh in Nelle’s north-pacific-gyre directory:
+BASH
+
+# Calculate stats for data files.
+for datafile in "$@"
+do
+    echo $datfile
+    bash goostats.sh $datafile stats-$datafile
+done
+
+When you run it from the north-pacific-gyre directory:
+BASH
+
+$ bash do-errors.sh NENE*A.txt NENE*B.txt
+
+the output is blank. To figure out why, re-run the script using the -x option:
+BASH
+
+$ bash -x do-errors.sh NENE*A.txt NENE*B.txt
+
+What is the output showing you? Which line is responsible for the error?
+
+###
+A. Spelling error from echo $datfile
+
+### 07-find (original source from https://swcarpentry.github.io/shell-novice/07-find.html)
+
+### Q. Which command would result in the following output:
+OUTPUT
+
+and the presence of absence:
+
+    grep "of" haiku.txt
+    grep -E "of" haiku.txt
+    grep -w "of" haiku.txt
+    grep -i "of" haiku.txt
+
+###
+A. grep -w "of" haiku.txt
+
+### Q. Leah has several hundred data files saved in one directory, each of which is formatted like this:
+
+2012-11-05,deer,5
+2012-11-05,rabbit,22
+2012-11-05,raccoon,7
+2012-11-06,rabbit,19
+2012-11-06,deer,2
+2012-11-06,fox,4
+2012-11-07,rabbit,16
+2012-11-07,bear,1
+
+She wants to write a shell script that takes a species as the first command-line argument and a directory as the second argument. The script should return one file called <species>.txt containing a list of dates and the number of that species seen on each date. For example using the data shown above, rabbit.txt would contain:
+
+2012-11-05,22
+2012-11-06,19
+2012-11-07,16
+
+Below, each line contains an individual command, or pipe. Arrange their sequence in one command in order to achieve Leah’s goal:
+BASH
+
+cut -d : -f 2
+>
+|
+grep -w $1 -r $2
+|
+$1.txt
+cut -d , -f 1,3
+
+Hint: use man grep to look for how to grep text recursively in a directory and man cut to select more than one field in a line.
+
+An example of such a file is provided in shell-lesson-data/exercise-data/animal-counts/animals.csv
+
+###
+A. grep -w $1 -r $2 | cut -d : -f 2 | cut -d , -f 1,3 > $1.txt
+
+### Q. 
+
+You and your friend, having just finished reading Little Women by Louisa May Alcott, are in an argument. Of the four sisters in the book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the most mentioned. You, however, are certain it was Amy. Luckily, you have a file LittleWomen.txt containing the full text of the novel (shell-lesson-data/exercise-data/writing/LittleWomen.txt). Using a for loop, how would you tabulate the number of times each of the four sisters is mentioned?
+
+Hint: one solution might employ the commands grep and wc and a |, while another might utilize grep options. There is often more than one way to solve a programming task, so a particular solution is usually chosen based on a combination of yielding the correct result, elegance, readability, and speed.
+
+###
+A. 
+for name in '$@'
+do
+	echo grep -w name LittleWomen.txt | wc -l -n -r 
+done
+
+### Q. 
+
+The -v option to grep inverts pattern matching, so that only lines which do not match the pattern are printed. Given that, which of the following commands will find all .dat files in creatures except unicorn.dat? Once you have thought about your answer, you can test the commands in the shell-lesson-data/exercise-data directory.
+
+    find creatures -name "*.dat" | grep -v unicorn
+    find creatures -name *.dat | grep -v unicorn
+    grep -v "unicorn" $(find creatures -name "*.dat")
+    None of the above.
+
+
+###
+A. find creatures -name "*.dat" | grep -v unicorn
+
+### Q. Write a short explanatory comment for the following shell script:
+BASH
+
+wc -l $(find . -name "*.dat") | sort -n
+
+### 
+A. First, find all files with the .dat file extension in the current working directory. Then, get the number of lines from each of these .dat files, and then sort them from smallest to largest number of files.
+
+
+
+
+
+
